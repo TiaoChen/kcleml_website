@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KCL EML Law Society | King's College London</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Source+Sans+3:wght@300;400;600&display=swap');
+        
+        /* CSS Variables for the KCL EML Palette */
+        :root {
+            --crimson: #8B0000;
+            --gold: #C9A84C;
+            --navy: #0A1628;
+            --cream: #F5F0E8;
+            --lightGold: #E8D5A3;
+            --darkCrimson: #5C0000;
+            --white: #FFFFFF;
+            --grayText: #6B7280;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Source Sans 3', sans-serif; background: var(--cream); color: var(--navy); }
+        
+        .nav { background: var(--navy); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid var(--gold); }
+        .nav-logo { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 0; }
+        .nav-crest { width: 40px; height: 40px; background: linear-gradient(135deg, var(--gold), var(--lightGold)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--navy); font-family: 'Playfair Display', serif; }
+        .nav-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: #fff; line-height: 1.2; }
+        .nav-subtitle { font-size: 0.65rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: #CBD5E1; text-decoration: none; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; cursor: pointer; }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+        
+        .hero { background: linear-gradient(160deg, var(--navy) 0%, #1a2e4a 60%, #162240 100%); padding: 6rem 2rem; text-align: center; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: -50%; left: -20%; width: 60%; height: 200%; background: radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 70%); pointer-events: none; }
+        .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+        .hero-tag { display: inline-block; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,168,76,0.4); padding: 0.3rem 1rem; margin-bottom: 1.5rem; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); color: #fff; line-height: 1.1; margin-bottom: 0.5rem; }
+        .hero h1 span { color: var(--gold); font-style: italic; }
+        .hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: #94A3B8; margin-bottom: 2.5rem; font-style: italic; }
+        
+        .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn-primary { background: var(--gold); color: var(--navy); border: none; padding: 0.85rem 2rem; font-family: 'Source Sans 3', sans-serif; font-weight: 600; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+        .btn-primary:hover { background: var(--lightGold); transform: translateY(-1px); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 0.85rem 2rem; font-family: 'Source Sans 3', sans-serif; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+        .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+        
+        .section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+        .section-label { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--crimson); margin-bottom: 0.5rem; font-weight: 600; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--navy); margin-bottom: 0.75rem; }
+        .divider { width: 50px; height: 2px; background: var(--gold); margin-bottom: 1rem; }
+        
+        .stats-bar { background: var(--crimson); padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
+        .stat-item { text-align: center; padding: 2rem 1rem; border-right: 1px solid rgba(255,255,255,0.1); }
+        .stat-item:last-child { border-right: none; }
+        .stat-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--gold); line-height: 1; margin-bottom: 0.25rem; }
+        .stat-label { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+        
+        .newsletter-box { background: var(--navy); padding: 3rem; position: relative; overflow: hidden; }
+        .newsletter-box::before { content: '§'; position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); font-size: 8rem; color: rgba(201,168,76,0.06); font-family: 'Playfair Display', serif; pointer-events: none; }
+        .newsletter-box h2 { font-family: 'Playfair Display', serif; color: #fff; font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .newsletter-box p { color: #94A3B8; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-style: italic; margin-bottom: 1.5rem; }
+        .newsletter-form { display: flex; gap: 0.75rem; max-width: 520px; flex-wrap: wrap; }
+        .newsletter-input { flex: 1; min-width: 220px; padding: 0.85rem 1rem; border: 1px solid rgba(201,168,76,0.3); background: rgba(255,255,255,0.05); color: #fff; font-family: 'Source Sans 3', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+        .newsletter-input::placeholder { color: #64748B; }
+        .newsletter-input:focus { border-color: var(--gold); }
+        
+        .checkbox-row { display: flex; align-items: flex-start; gap: 0.5rem; margin-top: 0.75rem; width: 100%; }
+        .checkbox-row input[type="checkbox"] { margin-top: 3px; accent-color: var(--gold); width: 14px; height: 14px; flex-shrink: 0; }
+        .checkbox-row label { color: #94A3B8; font-size: 0.8rem; line-height: 1.5; cursor: pointer; }
+        .checkbox-row label a { color: var(--gold); text-decoration: none; }
+        
+        .success-msg { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.4); padding: 1rem 1.5rem; color: var(--gold); font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem; max-width: 520px; }
+        .error-msg { color: #EF4444; font-size: 0.8rem; margin-top: 0.25rem; width: 100%; }
+        
+        .post-card { background: #fff; border: 1px solid #E2D9CC; padding: 1.5rem; transition: all 0.2s; cursor: pointer; }
+        .post-card:hover { border-color: var(--gold); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+        .post-type { display: inline-block; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.2rem 0.6rem; margin-bottom: 0.75rem; font-weight: 600; }
+        .post-type.newsletter { background: rgba(139,0,0,0.08); color: var(--crimson); }
+        .post-type.announcement { background: rgba(201,168,76,0.15); color: #8B6914; }
+        .post-type.discussion { background: rgba(10,22,40,0.06); color: var(--navy); }
+        .post-type.event { background: rgba(16,185,129,0.1); color: #065F46; }
+        
+        .post-card h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--navy); margin-bottom: 0.4rem; line-height: 1.3; }
+        .post-card p { color: var(--grayText); font-size: 0.88rem; line-height: 1.6; margin-bottom: 0.75rem; }
+        .post-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #94A3B8; border-top: 1px solid #F0EBE3; padding-top: 0.75rem; }
+        .post-author { display: flex; align-items: center; gap: 0.4rem; }
+        .avatar { width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, var(--crimson), var(--darkCrimson)); display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: white; font-weight: 600; }
+        
+        .post-form { background: #fff; border: 1px solid #E2D9CC; padding: 2rem; margin-bottom: 2rem; display: none; }
+        .post-form.visible { display: block; }
+        .post-form h3 { font-family: 'Playfair Display', serif; color: var(--navy); margin-bottom: 1.5rem; font-size: 1.3rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
+        .form-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); font-weight: 600; }
+        .form-input, .form-select, .form-textarea { padding: 0.75rem 1rem; border: 1px solid #D4C9B8; background: var(--cream); font-family: 'Source Sans 3', sans-serif; font-size: 0.9rem; color: var(--navy); outline: none; transition: border-color 0.2s; width: 100%; }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); background: #fff; }
+        .form-textarea { min-height: 120px; resize: vertical; }
+        
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .about-text p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; line-height: 1.8; color: #374151; margin-bottom: 1rem; }
+        .feature-list { list-style: none; margin-top: 1rem; }
+        .feature-list li { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid #F0EBE3; font-size: 0.9rem; color: var(--navy); }
+        .feature-list li::before { content: '—'; color: var(--gold); font-weight: bold; flex-shrink: 0; }
+        
+        .about-visual { background: var(--navy); padding: 2.5rem; position: relative; overflow: hidden; }
+        .about-visual::before { content: '"'; font-family: 'Playfair Display', serif; font-size: 10rem; color: rgba(201,168,76,0.1); position: absolute; top: -1rem; left: 0.5rem; line-height: 1; }
+        .quote-text { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; color: #fff; line-height: 1.6; position: relative; z-index: 1; }
+        .quote-attr { margin-top: 1rem; font-size: 0.8rem; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; }
+        
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; display: none; align-items: center; justify-content: center; padding: 1rem; }
+        .modal-overlay.visible { display: flex; }
+        .modal { background: #fff; max-width: 680px; width: 100%; max-height: 80vh; overflow-y: auto; padding: 2.5rem; position: relative; }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--grayText); line-height: 1; }
+        .modal h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--navy); margin-bottom: 0.5rem; }
+        .modal-body { color: var(--navy); font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; line-height: 1.8; margin-top: 1rem; white-space: pre-wrap; }
+        
+        .footer { background: var(--navy); border-top: 2px solid var(--gold); padding: 3rem 2rem 1.5rem; color: #94A3B8; }
+        .footer-grid { max-width: 1100px; margin: 0 auto 2rem; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; }
+        .footer h4 { font-family: 'Playfair Display', serif; color: #fff; margin-bottom: 0.75rem; font-size: 1rem; }
+        .footer p, .footer a { font-size: 0.85rem; line-height: 1.7; color: #94A3B8; text-decoration: none; display: block; margin-bottom: 0.25rem; transition: color 0.2s; cursor: pointer; }
+        .footer a:hover { color: var(--gold); }
+        .footer-bottom { max-width: 1100px; margin: 0 auto; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; font-size: 0.75rem; color: #4B5563; }
+        
+        .subscribers-count { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); padding: 0.3rem 0.75rem; color: var(--gold); font-size: 0.8rem; margin-top: 0.75rem; }
+        
+        .page-content { display: none; }
+        .page-content.active { display: block; }
+
+        @media (max-width: 768px) { 
+            .nav-links { display: none; } 
+            .stats-bar { grid-template-columns: repeat(2, 1fr); } 
+            .about-grid, .footer-grid, .form-row { grid-template-columns: 1fr; } 
+            .hero h1 { font-size: 2.2rem; } 
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-logo">
+            <div class="nav-crest">⚖</div>
+            <div>
+                <div class="nav-title">KCL EML Law Society</div>
+                <div class="nav-subtitle">King's College London</div>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a onclick="navigateTo('home')" id="link-home" class="active">Home</a></li>
+            <li><a onclick="navigateTo('about')" id="link-about">About</a></li>
+            <li><a onclick="navigateTo('forum')" id="link-forum">Forum</a></li>
+            <li><a onclick="navigateTo('newsletter')" id="link-newsletter">Newsletter</a></li>
+        </ul>
+    </nav>
+
+    <main id="page-home" class="page-content active">
+        <div class="hero">
+            <div class="hero-tag">Est. 2003 · The Strand, London</div>
+            <h1>European & <span>Multilingual</span><br/>Law Society</h1>
+            <p class="hero-sub">King's College London · Advocating excellence in European legal discourse</p>
+            <div class="hero-btns">
+                <button class="btn-primary" onclick="navigateTo('newsletter')">Subscribe to Newsletter</button>
+                <button class="btn-outline" onclick="navigateTo('forum')">Explore Forum</button>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item"><div class="stat-num">320+</div><div class="stat-label">Active Members</div></div>
+            <div class="stat-item"><div class="stat-num">47</div><div class="stat-label">New This Term</div></div>
+            <div class="stat-item"><div class="stat-num">12</div><div class="stat-label">Events Per Year</div></div>
+            <div class="stat-item"><div class="stat-num" id="sub-count-display">280</div><div class="stat-label">Newsletter Subscribers</div></div>
+        </div>
+
+        <div class="section">
+            <div class="about-grid">
+                <div class="about-text">
+                    <div class="section-label">Who We Are</div>
+                    <div class="divider"></div>
+                    <h2 class="section-title">A Community of Legal Scholars</h2>
+                    <p>The European and Multilingual Law Society at King's College London brings together students passionate about international and European legal frameworks, multilingual practice, and cross-border advocacy.</p>
+                    <p>Founded on the principles of intellectual rigour and collegiate ambition, we connect aspiring lawyers with the profession through mentorship, events, and scholarly debate.</p>
+                    <ul class="feature-list">
+                        <li>Weekly academic discussion panels</li>
+                        <li>Annual mooting competition</li>
+                        <li>Alumni mentoring programme</li>
+                        <li>The EML Review — termly newsletter</li>
+                    </ul>
+                </div>
+                <div class="about-visual">
+                    <p class="quote-text">"Law is not merely a system of rules. It is the living conscience of a society's highest aspirations."</p>
+                    <div class="quote-attr">— EML Founding Charter, 2003</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #EFEBE3; padding: 4rem 2rem;">
+            <div style="maxWidth: 1100px; margin: 0 auto;">
+                <div class="section-label">Latest Posts</div>
+                <div class="divider"></div>
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem;">
+                    <h2 class="section-title" style="margin-bottom: 0;">From the Forum</h2>
+                    <button class="btn-primary" onclick="navigateTo('forum')">View All</button>
+                </div>
+                <div id="home-posts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <main id="page-about" class="page-content">
+        <div class="section">
+            <div class="section-label">About Us</div>
+            <div class="divider"></div>
+            <h2 class="section-title">The European & Multilingual Law Society</h2>
+            <div class="about-grid" style="margin-top: 2rem;">
+                <div class="about-text">
+                    <p>Founded in 2003, the EML Law Society has grown from a small study group of twelve students to one of King's College London's most active and respected academic societies, with over 320 current members.</p>
+                    <p>We sit at the intersection of comparative law, multilingual legal practice, and European legal tradition. In a post-Brexit landscape, our work has never been more intellectually stimulating.</p>
+                    <p>Our committee is elected annually by the membership and comprises a President, Vice-President (Academic), Secretary, Treasurer, Events Officer, and Careers Officer.</p>
+                    <ul class="feature-list" style="margin-top: 1.5rem;">
+                        <li>Annual Mooting Competition</li>
+                        <li>Careers Evenings with City Firms</li>
+                        <li>Weekly Academic Discussion Groups</li>
+                        <li>The EML Review (termly publication)</li>
+                        <li>Language Exchange Programme</li>
+                        <li>Erasmus Alumni Network</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="about-visual" style="margin-bottom: 1rem;">
+                        <p class="quote-text">"The EML Society gave me the confidence to present arguments in two languages before practitioners who would go on to become my colleagues."</p>
+                        <div class="quote-attr">— Sophie Laurent, LLB 2021, Now at Cleary Gottlieb Paris</div>
+                    </div>
+                    <div style="background: #fff; border: 1px solid #E2D9CC; padding: 1.5rem;">
+                        <div class="section-label" style="margin-bottom: 0.5rem;">Contact</div>
+                        <p style="font-family: 'Cormorant Garamond', serif; font-size: 1rem; line-height: 1.7; color: #6B7280;">eml@kcl.ac.uk<br/>The Strand Building, Room 2.14<br/>King's College London<br/>WC2R 2LS</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <main id="page-forum" class="page-content">
+        <div class="section">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <div class="section-label">Community Board</div>
+                    <div class="divider"></div>
+                    <h2 class="section-title" style="margin-bottom: 0.25rem;">Forum & Newsletters</h2>
+                    <p style="color: #6B7280; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-style: italic;">Discussions, announcements and the termly EML Review</p>
+                </div>
+                <button class="btn-primary" id="toggle-post-form" onclick="togglePostForm()">+ New Post</button>
+            </div>
+
+            <div id="post-success-msg" class="success-msg" style="margin-bottom: 1.5rem; display: none;">✓ Your post has been published to the board.</div>
+
+            <div id="new-post-form" class="post-form">
+                <h3>Publish to Board</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Post Type</label>
+                        <select class="form-select" id="form-type">
+                            <option value="newsletter">Newsletter</option>
+                            <option value="announcement">Announcement</option>
+                            <option value="discussion" selected>Discussion</option>
+                            <option value="event">Event</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Author / Committee</label>
+                        <input class="form-input" id="form-author" placeholder="e.g. Editorial Board" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Title</label>
+                    <input class="form-input" id="form-title" placeholder="Post title..." />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Short Summary (shown in card)</label>
+                    <input class="form-input" id="form-excerpt" placeholder="Brief description..." />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Full Content</label>
+                    <textarea class="form-textarea" id="form-content" rows="8" placeholder="Write the full post content here..."></textarea>
+                </div>
+                <button class="btn-primary" onclick="submitNewPost()">Publish Post</button>
+            </div>
+
+            <div id="forum-posts-list" style="display: grid; gap: 1rem;">
+                </div>
+        </div>
+    </main>
+
+    <main id="page-newsletter" class="page-content">
+        <div style="background: var(--navy); padding: 4rem 2rem; text-align: center;">
+            <div class="hero-tag" style="display: inline-block;">The EML Review</div>
+            <h1 style="font-family: 'Playfair Display', serif; color: #fff; font-size: 2.8rem; margin: 1rem 0 0.75rem;">
+                Stay Informed.<br/><span style="color: var(--gold); font-style: italic;">Stay Ahead.</span>
+            </h1>
+            <p style="color: #94A3B8; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic;">Receive the EML Review and society announcements each term.</p>
+        </div>
+
+        <div style="max-width: 800px; margin: 0 auto; padding: 4rem 2rem;">
+            <div id="subscription-container">
+                <div class="newsletter-box">
+                    <h2>Subscribe to the EML Newsletter</h2>
+                    <p>Join over <span class="sub-count-text">280</span> subscribers receiving termly updates, event invitations, and The EML Review.</p>
+                    <div class="newsletter-form">
+                        <input id="sub-email" class="newsletter-input" type="email" placeholder="your.email@kcl.ac.uk">
+                        <button class="btn-primary" onclick="handleSubscribe()">Subscribe</button>
+                        <div class="checkbox-row">
+                            <input type="checkbox" id="consent-check">
+                            <label for="consent-check">I agree to receive newsletters and communications from KCL EML Law Society. You can unsubscribe at any time. We respect your privacy and will never share your data with third parties. View our <a href="#">Privacy Policy</a>.</label>
+                        </div>
+                        <div id="sub-error" class="error-msg" style="display: none;"></div>
+                    </div>
+                    <div class="subscribers-count"><span>◉</span> <span class="sub-count-text">280</span> subscribers and counting</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <div class="section-label">Past Issues</div>
+                <div class="divider"></div>
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--navy);">The EML Review Archive</h3>
+                <div id="newsletter-archive-list">
+                    </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <h4>KCL EML Law Society</h4>
+                <p>The European and Multilingual Law Society at King's College London. Fostering legal excellence and international perspective since 2003.</p>
+            </div>
+            <div>
+                <h4>Navigation</h4>
+                <a onclick="navigateTo('home')">Home</a>
+                <a onclick="navigateTo('about')">About</a>
+                <a onclick="navigateTo('forum')">Forum</a>
+                <a onclick="navigateTo('newsletter')">Newsletter</a>
+            </div>
+            <div>
+                <h4>Contact</h4>
+                <p>eml@kcl.ac.uk</p>
+                <p>The Strand Building, Room 2.14</p>
+                <p>King's College London, WC2R 2LS</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2025 KCL EML Law Society. All rights reserved.</span>
+            <span>King's College London</span>
+        </div>
+    </footer>
+
+    <div id="post-modal" class="modal-overlay" onclick="closeModal()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <span id="modal-type" class="post-type"></span>
+            <h2 id="modal-title" style="margin-top: 0.75rem;"></h2>
+            <div class="post-meta" style="border-top: none; padding-top: 0; margin-top: 0.5rem;">
+                <div class="post-author">
+                    <div id="modal-avatar" class="avatar"></div>
+                    <span id="modal-author-name"></span>
+                </div>
+                <span id="modal-date-info"></span>
+            </div>
+            <div id="modal-body" class="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        let posts = [
+            { id: 1, type: "newsletter", title: "The EML Review — Michaelmas Term 2025", excerpt: "Landmark EU AI Act implications for English contract law, an exclusive interview with a senior partner at Freshfields, and our upcoming mooting competition schedule.", content: `Welcome to the Michaelmas Term 2025 edition of The EML Review.\n\nThis term has been exceptionally busy for our society. We hosted three guest lecture series, participated in the National Law Moot, and welcomed 47 new student members.\n\nEU AI Act & English Contract Law\nThe recent enforcement of the EU AI Act raises fascinating questions for practitioners operating under English law post-Brexit. Our academic lead, Dr. Amara Chen, has prepared a detailed analysis exploring whether existing common law frameworks can accommodate the Act's risk-classification system.\n\nFreshfields Interview\nWe sat down with Emma Hartley (KCL LLB 2018), now Senior Associate at Freshfields Bruckhaus Deringer, to discuss her journey from the Strand to one of Magic Circle's finest.\n\nUpcoming Events\n— Advocacy Workshop: 15 Nov, Room G4, Strand Building\n— Alumni Careers Fair: 22 Nov, Great Hall\n— Michaelmas Formal Dinner: 5 Dec, Temple Inn\n\nWe hope to see you at our events.`, author: "Editorial Board", date: "Oct 28, 2025", readTime: "8 min read" },
+            { id: 2, type: "announcement", title: "2026 Mooting Competition — Applications Now Open", excerpt: "KCL EML Law Society is delighted to announce the opening of applications for our annual internal mooting competition.", content: `Applications are now open for the 2026 KCL EML Internal Mooting Competition.\n\nThis is an incredible opportunity to develop your advocacy skills in a structured and supportive environment. The winner will represent King's College London at the National Varsity Moot in April 2026.\n\nFormat: Round robin heats → Quarterfinals → Semi-finals → Grand Final\n\nEligibility: All current KCL law students (LLB, LLM, GDL) who are EML members in good standing.\n\nHow to Apply: Submit a 500-word personal statement and your academic transcript to eml@kcl.ac.uk by 30 November 2025.\n\nCoaching: Selected participants will receive coaching from our alumni mentors currently practising at the Bar.`, author: "Events Committee", date: "Nov 2, 2025", readTime: "4 min read" },
+            { id: 3, type: "discussion", title: "The Future of ADR: Has Arbitration Lost Its Edge?", excerpt: "Following last week's lecture by Prof. Williams, members share views on whether international commercial arbitration remains fit for purpose.", content: `Following Professor Williams' thought-provoking guest lecture on the evolution of international commercial arbitration, we invite members to contribute to this discussion.\n\nKey questions raised:\n\n1. Is the cost of arbitration now prohibitive for mid-market disputes?\n2. How does the proliferation of bilateral investment treaties affect consistency?\n3. Is mediation increasingly the preferred first-step in dispute resolution?\n\nWe'd love to hear your perspectives, especially those of you with commercial practice placements. Please reply via the forum or attend our next discussion session on 18 November.`, author: "Dr. J. Williams", date: "Nov 5, 2025", readTime: "6 min read" },
+            { id: 4, type: "event", title: "Alumni Careers Evening — Magic Circle & Silver Circle Firms", excerpt: "Join us for an evening of networking with KCL alumni currently at Clifford Chance, Linklaters, Allen & Overy, Herbert Smith Freehills, and more.", content: `The KCL EML Society is proud to host our annual Alumni Careers Evening on Thursday 22 November 2025, 6:00–9:00 PM in the Anatomy Museum, King's Building.\n\nConfirmed Alumni:\n— Sarah Chen, Trainee Solicitor, Clifford Chance\n— James O'Brien, Associate, Linklaters\n— Priya Sharma, NQ Solicitor, Allen & Overy\n— Marcus Webb, Barrister, 3 Verulam Buildings\n\nFormat:\n6:00pm — Registration & Drinks Reception\n6:30pm — Panel Discussion: "Routes to the Top"\n7:30pm — Open Networking\n9:00pm — Close\n\nSpaces are limited. RSVP by 15 November to eml@kcl.ac.uk.`, author: "Careers Committee", date: "Nov 8, 2025", readTime: "3 min read" },
+        ];
+
+        let subscribers = [];
+        const baseSubCount = 280;
+
+        // --- NAVIGATION ---
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            // Remove active from links
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            
+            // Show target page
+            document.getElementById(`page-${pageId}`).classList.add('active');
+            // Set link active
+            const link = document.getElementById(`link-${pageId}`);
+            if (link) link.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+            renderPosts();
+        }
+
+        // --- RENDER POSTS ---
+        function createPostCard(post) {
+            const card = document.createElement('div');
+            card.className = 'post-card';
+            card.onclick = () => openModal(post);
+            
+            const excerpt = post.excerpt || (post.content.slice(0, 150) + "...");
+            
+            card.innerHTML = `
+                <span class="post-type ${post.type}">${post.type}</span>
+                <h3>${post.title}</h3>
+                <p>${excerpt.replace(/\n/g, ' ')}</p>
+                <div class="post-meta">
+                    <div class="post-author">
+                        <div class="avatar">${post.author[0]}</div>
+                        <span>${post.author}</span>
+                    </div>
+                    <span>${post.date} · ${post.readTime}</span>
+                </div>
+            `;
+            return card;
+        }
+
+        function renderPosts() {
+            const homeGrid = document.getElementById('home-posts-grid');
+            const forumList = document.getElementById('forum-posts-list');
+            const archiveList = document.getElementById('newsletter-archive-list');
+
+            if (homeGrid) {
+                homeGrid.innerHTML = '';
+                posts.slice(0, 3).forEach(p => homeGrid.appendChild(createPostCard(p)));
+            }
+
+            if (forumList) {
+                forumList.innerHTML = '';
+                posts.forEach(p => forumList.appendChild(createPostCard(p)));
+            }
+
+            if (archiveList) {
+                archiveList.innerHTML = '';
+                posts.filter(p => p.type === 'newsletter').forEach(p => archiveList.appendChild(createPostCard(p)));
+            }
+        }
+
+        // --- MODAL ---
+        function openModal(post) {
+            document.getElementById('modal-type').textContent = post.type;
+            document.getElementById('modal-type').className = `post-type ${post.type}`;
+            document.getElementById('modal-title').textContent = post.title;
+            document.getElementById('modal-avatar').textContent = post.author[0];
+            document.getElementById('modal-author-name').textContent = post.author;
+            document.getElementById('modal-date-info').textContent = `${post.date} · ${post.readTime}`;
+            document.getElementById('modal-body').textContent = post.content;
+            document.getElementById('post-modal').classList.add('visible');
+        }
+
+        function closeModal() {
+            document.getElementById('post-modal').classList.remove('visible');
+        }
+
+        // --- SUBSCRIPTION ---
+        function updateSubDisplay() {
+            const count = baseSubCount + subscribers.length;
+            document.querySelectorAll('.sub-count-text').forEach(el => el.textContent = count);
+            document.getElementById('sub-count-display').textContent = count;
+        }
+
+        function handleSubscribe() {
+            const emailInput = document.getElementById('sub-email');
+            const consentCheck = document.getElementById('consent-check');
+            const errorEl = document.getElementById('sub-error');
+            
+            errorEl.style.display = 'none';
+            
+            const email = emailInput.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!email || !emailRegex.test(email)) {
+                errorEl.textContent = "Please enter a valid email address.";
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            if (!consentCheck.checked) {
+                errorEl.textContent = "Please accept the newsletter terms to subscribe.";
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            // Success
+            subscribers.push(email);
+            updateSubDisplay();
+            
+            document.getElementById('subscription-container').innerHTML = `
+                <div style="text-align: center; padding: 3rem 2rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">✉</div>
+                    <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: #0A1628; margin-bottom: 0.75rem;">You're subscribed!</h2>
+                    <p style="color: #6B7280; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; margin-bottom: 2rem;">Welcome to the EML community. Look out for your first issue in your inbox.</p>
+                    <button class="btn-primary" onclick="navigateTo('forum')">Browse the Forum</button>
+                </div>
+            `;
+        }
+
+        // --- FORUM ACTIONS ---
+        function togglePostForm() {
+            const form = document.getElementById('new-post-form');
+            const btn = document.getElementById('toggle-post-form');
+            form.classList.toggle('visible');
+            btn.textContent = form.classList.contains('visible') ? '✕ Cancel' : '+ New Post';
+        }
+
+        function submitNewPost() {
+            const type = document.getElementById('form-type').value;
+            const author = document.getElementById('form-author').value;
+            const title = document.getElementById('form-title').value;
+            const excerpt = document.getElementById('form-excerpt').value;
+            const content = document.getElementById('form-content').value;
+
+            if (!title || !content || !author) {
+                alert("Please fill in the title, author, and content fields.");
+                return;
+            }
+
+            const wordCount = content.split(/\s+/).length;
+            const readTime = Math.max(1, Math.ceil(wordCount / 200)) + " min read";
+            const date = new Date().toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+
+            const newPost = {
+                id: Date.now(),
+                type, author, title, excerpt, content, date, readTime
+            };
+
+            posts.unshift(newPost);
+            
+            // Clear form
+            document.getElementById('form-author').value = '';
+            document.getElementById('form-title').value = '';
+            document.getElementById('form-excerpt').value = '';
+            document.getElementById('form-content').value = '';
+            
+            togglePostForm();
+            renderPosts();
+
+            // Success feedback
+            const msg = document.getElementById('post-success-msg');
+            msg.style.display = 'flex';
+            setTimeout(() => { msg.style.display = 'none'; }, 4000);
+        }
+
+        // Initial render
+        renderPosts();
+        updateSubDisplay();
+    </script>
+</body>
+</html>
